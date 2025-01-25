@@ -458,7 +458,7 @@ class Ui_MainForm(object):
             Вторая строка - это почта, через которую пользователь
             будет отправлять email
             """
-            sender_password = 'rsjv dwhl ystk tjnz'
+            sender_password = 'snio cuui zztn linv'
             sender_email = 'gogle35673@gmail.com'
             subject = self.lineEdit_7.text()
             message = self.plainTextEdit.toPlainText()
