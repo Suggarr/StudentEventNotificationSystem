@@ -1,4 +1,4 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PySide6 import QtCore, QtGui, QtWidgets
 
 class Ui_SplashScreen(object):
     def setupUi(self, SplashScreen): # Создание окна
@@ -81,7 +81,7 @@ class Ui_SplashScreen(object):
         self.pushButton_2 = QtWidgets.QPushButton(SplashScreen)
         self.pushButton_2.setGeometry(QtCore.QRect(510, 620, 351, 61))
         self.pushButton_2.setStyleSheet("")
-        self.pushButton_2.clicked.connect(QtWidgets.qApp.quit)
+        self.pushButton_2.clicked.connect(QtCore.QCoreApplication.quit)
         self.pushButton_2.setObjectName("pushButton_2")
         self.label_7 = QtWidgets.QLabel(SplashScreen)
         self.label_7.setGeometry(QtCore.QRect(130, 270, 681, 91))

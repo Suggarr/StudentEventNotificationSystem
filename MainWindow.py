@@ -1,7 +1,12 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QTableWidgetItem, QHeaderView,  QListWidgetItem, QFileDialog, QMessageBox, QAbstractItemView
-from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import Qt
+from datetime import datetime
+
+from PySide6 import QtCore, QtGui, QtWidgets
+from PySide6.QtWidgets import (
+    QTableWidgetItem, QHeaderView, QListWidgetItem,
+    QFileDialog, QMessageBox, QAbstractItemView
+)
+from PySide6.QtGui import QIcon, QAction
+from PySide6.QtCore import Qt
 import smtplib, socket, re
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -10,7 +15,6 @@ from email import encoders
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils import get_column_letter
 import os
-
 
 class Ui_MainForm(object):
     def __init__(self):
@@ -237,15 +241,15 @@ class Ui_MainForm(object):
         self.menu_3 = QtWidgets.QMenu(self.menubar)
         self.menu_3.setObjectName("menu_3")
         MainForm.setMenuBar(self.menubar)
-        self.load = QtWidgets.QAction(MainForm)
+        self.load = QAction(MainForm)
         self.load.setObjectName("load")
-        self.save = QtWidgets.QAction(MainForm)
+        self.save = QAction(MainForm)
         self.save.setObjectName("save")
-        self.actionQuit = QtWidgets.QAction(MainForm)
+        self.actionQuit = QAction(MainForm)
         self.actionQuit.setObjectName("actionQuit")
-        self.user_inf = QtWidgets.QAction(MainForm)
+        self.user_inf = QAction(MainForm)
         self.user_inf.setObjectName("user_inf")
-        self.prog_inf = QtWidgets.QAction(MainForm)
+        self.prog_inf = QAction(MainForm)
         self.prog_inf.setObjectName("prog_inf")
         self.menu.addAction(self.load)
         self.menu.addSeparator()
@@ -273,7 +277,7 @@ class Ui_MainForm(object):
         self.del_id.clicked.connect(self.remove_row)
         self.save.triggered.connect(self.save_file)
         self.load.triggered.connect(self.open_file)
-        self.pushButton_4.clicked.connect(QtWidgets.qApp.quit)
+        self.pushButton_4.clicked.connect(QtWidgets.QApplication.quit)
         self.del_text.clicked.connect(self.entry_inf)
         self.actionQuit.triggered.connect(QtWidgets.QApplication.quit)
 
@@ -306,7 +310,7 @@ class Ui_MainForm(object):
             cancel_button = message_box.addButton(QMessageBox.Cancel)
             cancel_button.setText("Отмена")
 
-        message_box.exec_()
+        message_box.exec()
 
         if second_button and message_box.clickedButton() == cancel_button:
             return "Отмена"
@@ -319,8 +323,9 @@ class Ui_MainForm(object):
             self.listWidget.addItem(item)
 
     def open_file(self): # Открытие таблицы excel
-        file_dialog = QFileDialog(self)
-        filepath, _ = file_dialog.getOpenFileName(self, "Открыть файл Excel", "", "Excel Files (*.xlsx *.xls)")
+        filepath, _ = QFileDialog.getOpenFileName(
+            None, "Открыть файл Excel", "", "Excel Files (*.xlsx *.xls)"
+        )
         if filepath:
             try:
                 workbook = load_workbook(filepath)
@@ -348,8 +353,10 @@ class Ui_MainForm(object):
 
 
     def save_file(self): # Сохранение таблицы Excel
+        timestamp = datetime.now().strftime("%d-%m-%Y")
+        default_filename = f"Students_{timestamp}.xlsx"
         file_dialog = QFileDialog(self)
-        filepath, _ = file_dialog.getSaveFileName(self, "Сохранить файл Excel", "", "Excel Files (*.xlsx *.xls)")
+        filepath, _ = file_dialog.getSaveFileName(self, "Сохранить файл Excel", default_filename, "Excel Files (*.xlsx)")
         if filepath:
             workbook = Workbook()
             sheet = workbook.active
@@ -597,4 +604,4 @@ if __name__ == "__main__":
     ui = Ui_MainForm()
     ui.setupUi(MainForm)
     MainForm.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

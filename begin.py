@@ -1,6 +1,6 @@
 import sys
-from PyQt5 import QtWidgets
-from PyQt5.QtCore import QTimer
+from PySide6 import QtWidgets
+from PySide6.QtCore import QTimer
 
 import splash_screen
 import MainWindow
