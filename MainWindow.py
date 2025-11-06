@@ -14,7 +14,10 @@ from email.mime.base import MIMEBase
 from email import encoders
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils import get_column_letter
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
 
 class Ui_MainForm(object):
     def __init__(self):
@@ -461,12 +464,12 @@ class Ui_MainForm(object):
         if self.check_internet_connection():
             """
             Следующие две строки необходимо было заполнить 
-            пользователю. Первая строка - это пароль.
-            Вторая строка - это почта, через которую пользователь
+            пользователю в .env. Первая строка - это почта, через которую пользователь
             будет отправлять email
+            Вторая строка - это пароль.
             """
-            sender_password = 'snio cuui zztn linv'
-            sender_email = 'gogle35673@gmail.com'
+            sender_email = os.getenv('SENDER_EMAIL')
+            sender_password = os.getenv('SENDER_PASSWORD')
             subject = self.lineEdit_7.text()
             message = self.plainTextEdit.toPlainText()
             if self.tableWidget.rowCount() == 0:
